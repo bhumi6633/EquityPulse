@@ -15,4 +15,6 @@ Deployment: Local environment (can be deployed to any cloud platform)
 2. Click "Get Price": Click the button to retrieve the latest stock price.
 3. View the Result: The current stock price will be displayed on the same page without needing to reload.
 
+
+
 <img width="688" alt="Screenshot 2025-03-09 at 7 44 26 PM" src="https://github.com/user-attachments/assets/6a9f6374-7305-4d36-8c5c-60d3f71497a5" />
