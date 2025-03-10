@@ -4,10 +4,10 @@ A real-time stock price tracker built using Flask, yfinance, and Tailwind CSS. T
 
 # Tech Stack 🛠️
 
-Backend: Flask (Python)
-Frontend: HTML, JavaScript, Tailwind CSS
-Stock Data Source: Yahoo Finance API via the yfinance Python library
-Deployment: Local environment (can be deployed to any cloud platform)
+- Backend: Flask (Python)
+- Frontend: HTML, JavaScript, Tailwind CSS
+- Stock Data Source: Yahoo Finance API via the yfinance Python library
+- Deployment: Local environment (can be deployed to any cloud platform)
 
 # How to Use
 
