@@ -7,33 +7,36 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <script>
   if (localStorage.getItem('theme') === 'dark') {
     document.documentElement.classList.add('dark');
   }
 </script>
 <style>
+  body { font-family: 'Inter', sans-serif; }
   .drop-shadow-glow {
     filter: drop-shadow(0 0 10px #facc15) drop-shadow(0 0 20px #facc15);
   }
 </style>
 </head>
 <body class="relative bg-cover bg-center bg-no-repeat text-black dark:text-white transition-all min-h-screen"
-      style="background-image: url('{{ url_for('static', filename='nyse_bg.png') }}');">
+      style="background-image: url('{{ url_for('static', filename='nyse_bg.jpg') }}');">
 
-  <!-- Overlay for readability -->
-  <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
+  <!-- Overlay for readability + blur effect -->
+  <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-0"></div>
 
   <!-- Content container -->
   <div class="relative z-10 p-6">
     <button onclick="toggleTheme()" class="absolute top-4 right-4 text-sm text-gray-300 hover:text-yellow-300 dark:hover:text-yellow-300">🌓 Toggle Theme</button>
     <div class="max-w-md mx-auto">
-      <img src="{{ url_for('static', filename='EquityPulse.png') }}" alt="EquityPulse Logo" class="mx-auto mb-4 w-20 h-20 drop-shadow-glow animate-pulse">
-      <h1 class="text-3xl font-extrabold text-yellow-400 mb-2 tracking-wider">💹 EquityPulse</h1>
-      <p class="text-xs text-gray-300 mb-4">Live Market Intelligence. Inspired by Wall Street.</p>
+      <img src="{{ url_for('static', filename='EquityPulse.png') }}" alt="EquityPulse Logo" class="mx-auto mb-4 w-20 h-20 drop-shadow-glow">
+      <div class="text-center text-base font-semibold text-gray-300 mb-4">
+        <p class="mb-1 text-xl"> <span class="text-yellow-300">Live Market Intelligence.Inspired by Wall Street 🏛️ </span></p>
+      </div>
 
       <input id="stock-symbol" type="text" placeholder="Enter symbol (e.g., AAPL)"
-            class="w-full p-2 bg-gray-900 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400">
+            class="w-full p-2 bg-gray-900 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400/70">
 
       <button onclick="getStockPrice()" class="mt-4 w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold p-2 rounded">
         Track Stock
@@ -72,11 +75,25 @@
         },
         options: {
           plugins: {
-            legend: { labels: { color: '#facc15' } }
+            legend: {
+              labels: {
+                color: '#facc15',
+                font: { size: 12 }
+              },
+              title: {
+                display: false
+              }
+            }
           },
           scales: {
-            x: { ticks: { color: '#facc15' } },
-            y: { ticks: { color: '#facc15' } }
+            x: {
+              ticks: { color: '#facc15' },
+              grid: { color: 'rgba(255,255,255,0.1)' }
+            },
+            y: {
+              ticks: { color: '#facc15' },
+              grid: { color: 'rgba(255,255,255,0.1)' }
+            }
           }
         }
       });
