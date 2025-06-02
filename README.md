@@ -1,20 +1,36 @@
-# 📈 Live Stock Price Tracker 💹
+# 💹 EquityPulse  
+*Real-time market intelligence. Engineered for clarity. Inspired by the Street.*
 
-A real-time stock price tracker built using Flask, yfinance, and Tailwind CSS. This application allows users to get the latest stock price for any publicly listed company by simply entering the stock symbol. It's a clean and responsive web application that provides a seamless experience across devices.
-
-# Tech Stack 🛠️
-
-- Backend: Flask (Python)
-- Frontend: HTML, JavaScript, Tailwind CSS
-- Stock Data Source: Yahoo Finance API via the yfinance Python library
-- Deployment: Local environment (can be deployed to any cloud platform)
-
-# How to Use
-
-1. Enter a Stock Symbol: Type the stock symbol (e.g., AAPL for Apple, GOOG for Google) into the input field.
-2. Click "Get Price": Click the button to retrieve the latest stock price.
-3. View the Result: The current stock price will be displayed on the same page without needing to reload.
+A sleek and efficient stock tracker, EquityPulse delivers real-time market data and interactive charts in a Bloomberg-inspired interface.
 
 
+---
 
-<img width="688" alt="Screenshot 2025-03-09 at 7 44 26 PM" src="https://github.com/user-attachments/assets/6a9f6374-7305-4d36-8c5c-60d3f71497a5" />
+## 🔧 Tech Stack
+
+**Interface**  
+- HTML + Tailwind CSS (custom dark/light UI)  
+- JavaScript + jQuery  
+- Chart.js for historical price charts  
+
+**Backend Logic**  
+- Python Flask (server-side)  
+- AJAX (real-time stock fetch)  
+
+**Data Layer**  
+- yfinance (Yahoo Finance API)  
+- LocalStorage (recent search history)  
+
+---
+
+## 🔍 Features
+
+- ✅ Live stock price lookup (e.g., AAPL, TSLA)
+- 📈 30-day closing price chart (interactive)
+- 🌙 Theme toggle: light/dark
+- 🕰️ Watchlist with recent searches
+
+---
+
+## 🔗 Try It Out Live
+https://equitypulse.onrender.com/
