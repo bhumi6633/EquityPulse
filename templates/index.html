@@ -1,57 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="transition-all duration-300">
 <head>
-    <meta charset="UTF-8">
-    <title>📈 EquityPulse – Stock Tracker</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EquityPulse</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white min-h-screen flex flex-col items-center justify-center p-6">
 
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md text-center">
-        <h1 class="text-2xl font-bold text-gray-700 mb-4">📈 EquityPulse – Live Stock Price Tracker</h1>
-        
-        <input id="stock-symbol" type="text" placeholder="Enter stock symbol (e.g., AAPL)"
-               class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+  <button onclick="toggleTheme()" class="absolute top-4 right-4 text-sm text-gray-500 hover:text-gray-900 dark:hover:text-white">
+    🌓 Toggle Dark Mode
+  </button>
 
-        <button onclick="getStockPrice()" 
-                class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold p-2 rounded-lg transition">
-            Get Price
-        </button>
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-md text-center">
+    <h1 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">📈 EquityPulse</h1>
+    <input id="stock-symbol" type="text" placeholder="Enter stock symbol (e.g., AAPL)"
+           class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+    <button onclick="getStockPrice()" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg">
+      Get Price
+    </button>
+    <div id="stock-result" class="mt-6 text-lg font-medium"></div>
+    <canvas id="price-chart" class="mt-6 w-full h-64 hidden"></canvas>
+    <div id="recent-searches" class="mt-6 text-sm text-left"></div>
+  </div>
 
-        <div id="stock-result" class="mt-6 text-lg font-medium text-gray-700"></div>
-    </div>
+  <script>
+    let chart = null;
 
-    <script>
-        function getStockPrice() {
-            const symbol = $("#stock-symbol").val().trim();
-            if (symbol === "") {
-                alert("Please enter a stock symbol.");
-                return;
-            }
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    }
 
-            $.post("/get_price", { symbol: symbol }, function(data) {
-                if (data.error) {
-                    $("#stock-result").html(`<span class="text-red-600">${data.error}</span>`);
-                } else {
-                    const changeClass = data.change >= 0 ? "text-green-600" : "text-red-600";
-                    const sign = data.change >= 0 ? "+" : "";
-                    $("#stock-result").html(`
-                        <div>
-                            <div class="text-gray-700 font-semibold">${data.name} (${data.symbol})</div>
-                            <div class="text-2xl text-blue-600 mt-1">$${data.price}</div>
-                            <div class="${changeClass} text-sm mt-1">
-                                ${sign}${data.change} (${sign}${data.percent_change}%)
-                            </div>
-                        </div>
-                    `);
-                }
-            }).fail(function() {
-                $("#stock-result").html('<span class="text-red-600">Error fetching stock price.</span>');
-            });
+    function renderChart(labels, data) {
+      const ctx = document.getElementById("price-chart").getContext("2d");
+      if (chart) chart.destroy();
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Closing Price ($)',
+            data: data,
+            borderColor: 'rgb(59, 130, 246)',
+            tension: 0.3
+          }]
+        },
+        options: {
+          plugins: {
+            legend: { labels: { color: document.documentElement.classList.contains("dark") ? "white" : "black" }}
+          },
+          scales: {
+            x: { ticks: { color: document.documentElement.classList.contains("dark") ? "white" : "black" }},
+            y: { ticks: { color: document.documentElement.classList.contains("dark") ? "white" : "black" }}
+          }
         }
-    </script>
+      });
+      $("#price-chart").removeClass("hidden");
+    }
 
+    function getStockPrice() {
+      const symbol = $("#stock-symbol").val().trim();
+      if (!symbol) return alert("Please enter a stock symbol.");
+      updateRecentSearches(symbol);
+
+      $.post("/get_price", { symbol }, function(data) {
+        if (data.error) {
+          $("#stock-result").html(`<span class="text-red-600">${data.error}</span>`);
+        } else {
+          const changeClass = data.change >= 0 ? "text-green-600" : "text-red-600";
+          const sign = data.change >= 0 ? "+" : "";
+          $("#stock-result").html(`
+            <div>
+              <div class="font-semibold">${data.name} (${data.symbol})</div>
+              <div class="text-2xl text-blue-600 mt-1">$${data.price}</div>
+              <div class="mt-1 ${changeClass} text-sm">
+                ${sign}${data.change} (${sign}${data.percent_change}%)
+              </div>
+            </div>
+          `);
+          $.post("/get_history", { symbol }, function(histData) {
+            if (!histData.error) {
+              renderChart(histData.dates, histData.prices);
+            }
+          });
+        }
+      }).fail(() => {
+        $("#stock-result").html('<span class="text-red-600">Error fetching stock price.</span>');
+      });
+    }
+
+    function updateRecentSearches(symbol) {
+      let history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
+      symbol = symbol.toUpperCase();
+      history = [symbol, ...history.filter(s => s !== symbol)].slice(0, 5);
+      localStorage.setItem("searchHistory", JSON.stringify(history));
+      renderRecentSearches();
+    }
+
+    function renderRecentSearches() {
+      const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
+      if (history.length) {
+        $("#recent-searches").html(`
+          <div class="text-gray-600 dark:text-gray-300 font-semibold mb-1">Recent Searches:</div>
+          <ul class="list-disc list-inside space-y-1">
+            ${history.map(s => `<li class="cursor-pointer text-blue-500 hover:underline" onclick="reSearch('${s}')">${s}</li>`).join("")}
+          </ul>
+        `);
+      }
+    }
+
+    function reSearch(symbol) {
+      $("#stock-symbol").val(symbol);
+      getStockPrice();
+    }
+
+    $(document).ready(() => renderRecentSearches());
+  </script>
 </body>
 </html>
