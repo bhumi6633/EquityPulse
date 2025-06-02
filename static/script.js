@@ -11,3 +11,8 @@ function getStockPrice() {
         $("#stock-result").html('<span class="text-red-600">Error fetching stock price.</span>');
     });
 }
+function toggleTheme() {
+  const html = document.documentElement;
+  html.classList.toggle('dark');
+  localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+}
