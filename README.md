@@ -4,8 +4,6 @@
 EquityPulse is a streamlined stock tracker inspired by the Bloomberg Terminal, offering real-time data and interactive charts in a clean, responsive interface.
 
 
----
-
 ## 🔧 Tech Stack
 
 Frontend: HTML, Tailwind CSS, JavaScript (jQuery), Chart.js 
