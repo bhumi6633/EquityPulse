@@ -8,20 +8,12 @@ A sleek and efficient stock tracker, EquityPulse delivers real-time market data 
 
 ## 🔧 Tech Stack
 
-**Interface**  
-- HTML + Tailwind CSS (custom dark/light UI)  
-- JavaScript + jQuery  
-- Chart.js for historical price charts  
+Frontend:
+HTML, Tailwind CSS, JavaScript (jQuery), Chart.js
+🌙 Includes light/dark mode toggle and responsive UI
 
-**Backend**  
-- Python Flask (server-side)  
-- AJAX (real-time stock fetch)  
-
-**Data Layer**  
-- yfinance (Yahoo Finance API)  
-- LocalStorage (recent search history)  
-
----
+Backend:
+Flask (Python), yfinance API (Yahoo Finance)
 
 ## 🔍 Features
 
