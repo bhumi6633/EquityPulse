@@ -24,4 +24,6 @@ Backend: Flask (Python), yfinance API (Yahoo Finance)
 ## 🔗 Try It Out Live
 https://equitypulse.onrender.com/
 
-<img width="833" alt="Screenshot 2025-06-02 at 3 21 52 PM" src="https://github.com/user-attachments/assets/767a7446-8458-45a4-9766-dc64b18e8925" />
+
+<img width="618" alt="Screenshot 2025-06-02 at 3 33 18 PM" src="https://github.com/user-attachments/assets/21e1cf7d-e787-4c98-83d7-469aa720546d" />
+
