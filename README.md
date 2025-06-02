@@ -13,7 +13,7 @@ A sleek and efficient stock tracker, EquityPulse delivers real-time market data 
 - JavaScript + jQuery  
 - Chart.js for historical price charts  
 
-**Backend Logic**  
+**Backend**  
 - Python Flask (server-side)  
 - AJAX (real-time stock fetch)  
 
