@@ -1,4 +1,4 @@
-# 💹 EquityPulse  
+# 💹 EquityPulse : Live Stock Tracker 
 *Real-time market intelligence. Engineered for clarity. Inspired by the Street.*
 
 A sleek and efficient stock tracker, EquityPulse delivers real-time market data and interactive charts in a Bloomberg-inspired interface.
