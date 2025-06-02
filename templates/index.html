@@ -1,35 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" class="transition-all duration-300">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WStreet Tracker</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EquityPulse</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    if (localStorage.getItem('theme') === 'dark') {
-      document.documentElement.classList.add('dark');
-    }
-  </script>
-  <style>
-    body {
-      background-color: #0a0a0a;
-    }
-    canvas {
-      background-color: #1a1a1a;
-    }
-  </style>
+<script>
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+  }
+</script>
+<style>
+  .drop-shadow-glow {
+    filter: drop-shadow(0 0 10px #facc15) drop-shadow(0 0 20px #facc15);
+  }
+</style>
 </head>
-<body class="text-white font-mono min-h-screen flex flex-col items-center justify-center p-6">
-
-  <button onclick="toggleTheme()" class="absolute top-4 right-4 text-sm text-gray-400 hover:text-yellow-300">
-    🕶 Terminal Mode
-  </button>
-
-  <div class="bg-black p-6 rounded-lg shadow-lg border border-yellow-600 w-full max-w-md text-center">
-    <img src="/static/logo.png" alt="Wall Street Logo" class="mx-auto mb-4 w-16 h-16">
-    <h1 class="text-3xl font-extrabold text-yellow-400 mb-2 tracking-wider">💹EquityPulse</h1>
+<body class="bg-white dark:bg-black text-black dark:text-white p-6 transition-all">
+  <button onclick="toggleTheme()" class="absolute top-4 right-4 text-sm text-gray-500 hover:text-yellow-300 dark:hover:text-yellow-300">🌓 Toggle Theme</button>
+  <div class="max-w-md mx-auto">
+    <img src="{{ url_for('static', filename='logo_equitypulse.png') }}" alt="EquityPulse Logo" class="mx-auto mb-4 w-20 h-20 drop-shadow-glow animate-pulse">
+    <h1 class="text-3xl font-extrabold text-yellow-400 mb-2 tracking-wider"> EquityPulse</h1>
     <p class="text-xs text-gray-500 mb-4">Live Market Intelligence. Inspired by Wall Street.</p>
 
     <input id="stock-symbol" type="text" placeholder="Enter symbol (e.g., AAPL)"
@@ -138,6 +131,5 @@
 
     $(document).ready(() => renderRecentSearches());
   </script>
-
 </body>
 </html>
